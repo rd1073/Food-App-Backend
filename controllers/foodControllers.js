@@ -111,4 +111,22 @@ const updateFoodItem = async (req, res) => {
   };
 
 
-module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem };
+  // delete food item
+const deleteFoodItem = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const deletedFoodItem = await FoodItem.findByIdAndDelete(id);
+  
+      if (!deletedFoodItem) {
+        return res.status(404).json({ error: 'Food item not found' });
+      }
+  
+      res.status(200).json({ message: 'Food item deleted successfully', deletedFoodItem });
+    } catch (error) {
+      console.error('Error deleting food item by ID:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem };
