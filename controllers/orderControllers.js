@@ -52,4 +52,47 @@ const getMyOrders = async (req, res) => {
     }
   };
 
-module.exports = {createOrder, getMyOrders};
+
+// delete an order
+const deleteOrder = async (req, res) => {
+    try {
+      const userId = req.user.id; // Assuming the user ID is available in req.user
+      const orderId = req.params.orderId;
+  
+      // Check if the order belongs to the logged-in user
+      const order = await Order.findOne({ _id: orderId, user: userId });
+  
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found or does not belong to the user' });
+      }
+  
+      await Order.deleteOne({ _id: orderId });
+  
+      res.status(200).json({ message: 'Order deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+
+  // get a specific order
+  const getSpecificOrder = async (req, res) => {
+    try {
+      const userId = req.user.id; // Assuming the user ID is available in req.user
+      const orderId = req.params.orderId;
+  
+      // Check if the order belongs to the logged-in user
+      const order = await Order.findOne({ _id: orderId, user: userId }).populate('items.foodItem', 'name price');
+  
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found or does not belong to the user' });
+      }
+  
+      res.status(200).json(order);
+    } catch (error) {
+      console.error('Error getting single order:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+module.exports = {createOrder, getMyOrders, deleteOrder, getSpecificOrder};
