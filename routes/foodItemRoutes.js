@@ -1,14 +1,13 @@
 const express = require("express")
-const { addFoodItem } =require("../controllers/foodControllers")
+const { addFoodItem, getAllFoodItems } =require("../controllers/foodControllers")
 const router=express.Router();
-console.log(typeof addFoodItem);
-
+ 
 //add new food iteam
 router.route('/addfood').post(addFoodItem);
 
 
 // show all the food items
-router.route('/showall').get();
+router.route('/showall').get(getAllFoodItems);
 
 //get a specific food iteam
 router.route('/:id').get();

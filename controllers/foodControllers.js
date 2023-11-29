@@ -36,8 +36,19 @@ const addFoodItem =  async(req,res)=>{
          
 };
 
+//getting all the food iteam
+ const getAllFoodItems = async (req, res) => {
+  try {
+    const foodItems = await FoodItem.find();
+
+    res.status(200).json(foodItems);
+  } catch (error) {
+    console.error('Error getting all food items:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
 
 
-module.exports = { addFoodItem };
+module.exports = { addFoodItem, getAllFoodItems };
