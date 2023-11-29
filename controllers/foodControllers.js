@@ -60,6 +60,31 @@ const addFoodItem =  async(req,res)=>{
   }
 };
 
+//getting food iteam by a particular user
+const getFoodItemsByUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const foodItems = await FoodItem.find({ addedBy: user._id })
+      .populate('addedBy', 'username').exec();
+
+    if (!foodItems || foodItems.length === 0) {
+      return res.status(404).json({ error: 'No food items found for the given user' });
+    }
+
+    res.status(200).json(foodItems);
+  } catch (error) {
+    console.error('Error getting food items by user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 //get specific food iteam by id
 const getFoodItemById = async (req, res) => {
     try {
@@ -141,4 +166,4 @@ const deleteFoodItem = async (req, res) => {
     }
   };
 
-module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem };
+module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem, getFoodItemsByUser };
