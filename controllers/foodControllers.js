@@ -48,7 +48,23 @@ const addFoodItem =  async(req,res)=>{
   }
 };
 
+//get specific food iteam by id
+const getFoodItemById = async (req, res) => {
+    try {
+      const foodItem = await FoodItem.findById(req.params.id);
+  
+      if (!foodItem) {
+        return res.status(404).json({ error: 'Food item not found' });
+      }
+  
+      res.status(200).json(foodItem);
+    } catch (error) {
+      console.error('Error getting food item by ID:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 
 
-module.exports = { addFoodItem, getAllFoodItems };
+
+module.exports = { addFoodItem, getAllFoodItems, getFoodItemById };
