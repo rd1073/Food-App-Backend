@@ -33,11 +33,13 @@ const foodItemSchema = new mongoose.Schema({
 
 
 //orders
-  const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FoodItem', required: true }],
     status: { type: String, enum: ['pending', 'completed', 'cancelled'], default: 'pending' },
-    // Add any other fields relevant to orders
+    
+                                           
+     
   });
   
   const Order = conn.model('Order', orderSchema);
