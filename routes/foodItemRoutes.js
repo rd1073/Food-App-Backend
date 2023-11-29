@@ -1,5 +1,5 @@
 const express = require("express")
-const { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName } =require("../controllers/foodControllers")
+const { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem } =require("../controllers/foodControllers")
 const router=express.Router();
  
 //add new food iteam
@@ -17,7 +17,7 @@ router.route('/search/:name').get(getFoodItemByName);
 
 
 //update a food item
-router.route('/:id').put();
+router.route('/:id').put(updateFoodItem);
 
 //delete a food itea
 router.route('/:id').delete();

@@ -82,6 +82,33 @@ const getFoodItemByName = async (req, res) => {
     }
   };
 
+//update the food item
+const updateFoodItem = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name, description, price } = req.body;
+  
+      // Check if any of the required fields are missing
+      if (!name || !description || !price) {
+        return res.status(400).json({ error: 'Please provide all required fields' });
+      }
+  
+      const updatedFoodItem = await FoodItem.findByIdAndUpdate(
+        id,
+        { name, description, price },
+        { new: true } // This option returns the modified document rather than the original
+      );
+  
+      if (!updatedFoodItem) {
+        return res.status(404).json({ error: 'Food item not found' });
+      }
+  
+      res.status(200).json(updatedFoodItem);
+    } catch (error) {
+      console.error('Error updating food item by ID:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 
-module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName };
+module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem };
