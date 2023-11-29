@@ -34,12 +34,32 @@ const foodItemSchema = new mongoose.Schema({
 
 //orders
 const orderSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FoodItem', required: true }],
-    status: { type: String, enum: ['pending', 'completed', 'cancelled'], default: 'pending' },
-    
-                                           
-     
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    items: [
+      {
+        foodItem: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'FoodItem',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   });
   
   const Order = conn.model('Order', orderSchema);
