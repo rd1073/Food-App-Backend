@@ -6,14 +6,14 @@ const protect = async (req, res, next) => {
   
       if (
         req.headers.authorization &&
-        req.headers.authorization.startsWith("Bearer")
+        req.headers.authorization.startsWith("Bearer") // Bearer token
       ) {
         token = req.headers.authorization.split(" ")[1];
   
-        // Decodes token id
+        // decodes the  token id
         const decoded = jwt.verify(token, "abcd");
   
-        // Find the user by id and exclude the password field
+        // find the user by id and exclude the password field
         const user = await User.findById(decoded.id).select("-password");
   
         if (user) {

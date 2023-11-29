@@ -4,7 +4,7 @@ const { Order, FoodItem } = require('../config/db');
 const createOrder = async (req, res) => {
   try {
     const { items } = req.body;
-    const userId = req.user.id; // Assuming the user ID is available in req.user
+    const userId = req.user.id;  
 
      // Fetch the prices of the food items from the database
      const prices = await Promise.all(
@@ -42,7 +42,7 @@ const createOrder = async (req, res) => {
 // get all the orders of the logged in user
 const getMyOrders = async (req, res) => {
     try {
-      const userId = req.user.id; // Assuming the user ID is available in req.user
+      const userId = req.user.id;  
       const orders = await Order.find({ user: userId }).populate('items.foodItem', 'name description price');
   
       res.status(200).json(orders);
@@ -56,11 +56,10 @@ const getMyOrders = async (req, res) => {
 // delete an order
 const deleteOrder = async (req, res) => {
     try {
-      const userId = req.user.id; // Assuming the user ID is available in req.user
+      const userId = req.user.id;  
       const orderId = req.params.orderId;
   
-      // Check if the order belongs to the logged-in user
-      const order = await Order.findOne({ _id: orderId, user: userId });
+       const order = await Order.findOne({ _id: orderId, user: userId });
   
       if (!order) {
         return res.status(404).json({ error: 'Order not found or does not belong to the user' });
@@ -79,11 +78,10 @@ const deleteOrder = async (req, res) => {
   // get a specific order
   const getSpecificOrder = async (req, res) => {
     try {
-      const userId = req.user.id; // Assuming the user ID is available in req.user
+      const userId = req.user.id;  
       const orderId = req.params.orderId;
   
-      // Check if the order belongs to the logged-in user
-      const order = await Order.findOne({ _id: orderId, user: userId }).populate('items.foodItem', 'name price');
+       const order = await Order.findOne({ _id: orderId, user: userId }).populate('items.foodItem', 'name price');
   
       if (!order) {
         return res.status(404).json({ error: 'Order not found or does not belong to the user' });

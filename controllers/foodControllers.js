@@ -7,8 +7,7 @@ const addFoodItem =  async(req,res)=>{
         const { name, description, price } = req.body;
         console.log("Request Body:", req.body);
         const addedBy = req.user.id;
-
-        // Add any additional validation or processing here
+ 
         if (!name || !description || !price) {
             res.status(400).json({ error: "Please Enter all the Fields" });
             return;
@@ -123,7 +122,7 @@ const getFoodItemByName = async (req, res) => {
 //getting your own food items, by logged in user
 const getMyFoodItems = async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming the user ID is stored in req.user
+    const userId = req.user.id; 
 
     const foodItems = await FoodItem.find({ addedBy: userId })
       .populate('addedBy', 'username')
@@ -146,7 +145,7 @@ const updateFoodItem = async (req, res) => {
       const { id } = req.params;
       const { name, description, price } = req.body;
   
-      // Check if any of the required fields are missing
+      
       if (!name || !description || !price) {
         return res.status(400).json({ error: 'Please provide all required fields' });
       }
@@ -154,7 +153,7 @@ const updateFoodItem = async (req, res) => {
       const updatedFoodItem = await FoodItem.findByIdAndUpdate(
         id,
         { name, description, price },
-        { new: true } // This option returns the modified document rather than the original
+        { new: true } 
       );
   
       if (!updatedFoodItem) {

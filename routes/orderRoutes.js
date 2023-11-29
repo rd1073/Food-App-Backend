@@ -1,6 +1,6 @@
 const express = require('express');
-const { createOrder, getMyOrders, deleteOrder, getSpecificOrder} = require('../controllers/orderControllers'); // Adjust the import path
-const protect = require('../config/protect'); // Assuming you have middleware for authentication
+const { createOrder, getMyOrders, deleteOrder, getSpecificOrder} = require('../controllers/orderControllers'); 
+const protect = require('../config/protect'); 
 
 
 const router = express.Router();

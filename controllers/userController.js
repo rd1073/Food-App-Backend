@@ -31,7 +31,7 @@ const registerUser = async (req, res) => {
         password:hashedPassword,
       });
   
-      // Save the user instance to the database
+       
       newUser.save().then((user) => {
         console.log("User saved:", user);
 
@@ -61,7 +61,7 @@ const registerUser = async (req, res) => {
         return;
       } 
   
-      // Check if user already exists
+       
       const user = await User.findOne({ username });
   
       if (user && (await bcrypt.compare(password, user.password))) {

@@ -13,7 +13,7 @@ conn.on('error', (err) => {
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true},
     password: { type: String, required: true },
-    // Add any other user-related fields here
+    
   });
   
   const User = conn.model('User', userSchema);
