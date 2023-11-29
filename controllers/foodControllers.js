@@ -69,7 +69,7 @@ const getFoodItemByName = async (req, res) => {
     try {
       const { name } = req.params;
   
-      const foodItem = await FoodItem.find({ name });
+      const foodItem = await FoodItem.find({ name: new RegExp(name, 'i') });
   
       if (!foodItem || foodItem.length === 0) {
         return res.status(404).json({ error: 'Food item not found' });
