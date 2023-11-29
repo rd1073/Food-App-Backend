@@ -1,7 +1,7 @@
 const express = require("express")
 const { registerUser, loginUser }=require("../controllers/userController");
 const protect=require("../config/protect");
-console.log(typeof protect);
+//console.log(typeof protect);
 
 const router=express.Router();
  

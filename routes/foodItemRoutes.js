@@ -1,9 +1,11 @@
 const express = require("express")
 const { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem } =require("../controllers/foodControllers")
+const protect = require("../config/protect") 
 const router=express.Router();
- 
+
+
 //add new food iteam
-router.route('/addfood').post(addFoodItem);
+router.route('/addfood').post(protect, addFoodItem);
 
 
 // show all the food items

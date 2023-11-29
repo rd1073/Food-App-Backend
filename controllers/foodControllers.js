@@ -1,4 +1,4 @@
-const { FoodItem }=require("../config/db")
+const { FoodItem, User }=require("../config/db")
 
 
 //add new food iteam
@@ -6,6 +6,7 @@ const addFoodItem =  async(req,res)=>{
     try {
         const { name, description, price } = req.body;
         console.log("Request Body:", req.body);
+        const addedBy = req.user.id;
 
         // Add any additional validation or processing here
         if (!name || !description || !price) {
@@ -16,16 +17,27 @@ const addFoodItem =  async(req,res)=>{
           name,
           description,
           price,
+          addedBy
         });
 
-        newFoodItem.save().then((food) => {
+        newFoodItem.save().then(async(food) => {
             console.log("Food Item saved:", food);
-    
+            //newFoodItem.populate('addedBy', 'username');
+            await newFoodItem
+            .populate({
+              path: 'addedBy',
+              select: 'username',
+            });
             res.status(201).json({
               _id: food._id,
               name: food.name,
               description: food.description,
               price: food.price,
+              addedBy: {
+                _id: food.addedBy._id,
+                username: food.addedBy.username,
+                
+              },
             });
           });
         } catch (err) {

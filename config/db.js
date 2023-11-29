@@ -24,7 +24,10 @@ const foodItemSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
-    // Add any other fields relevant to food items
+    addedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model
+      },
   });
   const FoodItem = conn.model('FoodItem', foodItemSchema);
 
