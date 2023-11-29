@@ -1,5 +1,5 @@
 const express = require("express")
-const { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem, getFoodItemsByUser } =require("../controllers/foodControllers")
+const { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem, getFoodItemsByUser, getMyFoodItems } =require("../controllers/foodControllers")
 const protect = require("../config/protect") 
 const router=express.Router();
 
@@ -13,6 +13,10 @@ router.route('/showall').get(getAllFoodItems);
 
 //show all food items added by a particular user
 router.route('/showall/:username').get(getFoodItemsByUser);
+
+//show all food iteam of the logged in user
+router.get('/showmine', protect, getMyFoodItems);
+
 
 //get a specific food iteam (by its id)
 router.route('/:id').get(getFoodItemById);

@@ -119,6 +119,27 @@ const getFoodItemByName = async (req, res) => {
     }
   };
 
+
+//getting your own food items, by logged in user
+const getMyFoodItems = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming the user ID is stored in req.user
+
+    const foodItems = await FoodItem.find({ addedBy: userId })
+      .populate('addedBy', 'username')
+      .exec();
+
+    if (!foodItems || foodItems.length === 0) {
+      return res.status(404).json({ error: 'No food items found for the logged-in user' });
+    }
+
+    res.status(200).json(foodItems);
+  } catch (error) {
+    console.error('Error getting food items by logged-in user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 //update the food item
 const updateFoodItem = async (req, res) => {
     try {
@@ -166,4 +187,4 @@ const deleteFoodItem = async (req, res) => {
     }
   };
 
-module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem, getFoodItemsByUser };
+module.exports = { addFoodItem, getAllFoodItems, getFoodItemById, getFoodItemByName, updateFoodItem, deleteFoodItem, getFoodItemsByUser, getMyFoodItems };
